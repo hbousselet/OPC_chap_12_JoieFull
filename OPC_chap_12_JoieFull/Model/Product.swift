@@ -1,5 +1,5 @@
 //
-//  ClothesModel.swift
+//  Product.swift
 //  OPC_chap_12_JoieFull
 //
 //  Created by Hugues BOUSSELET on 23/07/2025.
