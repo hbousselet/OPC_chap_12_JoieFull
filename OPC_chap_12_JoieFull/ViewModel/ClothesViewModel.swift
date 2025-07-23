@@ -7,9 +7,25 @@
 
 import Foundation
 
-@Observable final class CothesViewModel: Sendable {
+@Observable final class ClothesViewModel: Sendable {
     var products: [Product] = []
     let apiService: ApiService = ApiService()
+    
+    var accessories: [Product] {
+        products.filter { $0.category == .accessories }
+    }
+    
+    var bottoms: [Product] {
+        products.filter { $0.category == .bottoms }
+    }
+    
+    var shoes: [Product] {
+        products.filter { $0.category == .shoes }
+    }
+    
+    var tops: [Product] {
+        products.filter { $0.category == .tops }
+    }
     
     func fetchProducts() async {
         do {
@@ -26,7 +42,8 @@ import Foundation
     }
 }
 
-@Observable class CothesViewModelVariante {
+@MainActor
+@Observable class CothesViewModelVariance: Sendable {
     var products: [Product] = []
     let apiService: ApiService = ApiService()
     

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct OPC_chap_12_JoieFullApp: App {
+    @State private var clothes = ClothesViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CatalogView()
+                .environment(clothes)
         }
     }
 }
