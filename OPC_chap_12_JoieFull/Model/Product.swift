@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Product
-struct Product: Codable, Identifiable {
+struct Product: Codable, Identifiable, Sendable {
     let id: Int
     let picture: Picture
     let name: String
