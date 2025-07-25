@@ -15,6 +15,10 @@ import Foundation
         products.filter { $0.category == .accessories }
     }
     
+    var groupedProducts: [String: [Product]] {
+        Dictionary(grouping: products) { $0.category.rawValue }
+    }
+    
     var bottoms: [Product] {
         products.filter { $0.category == .bottoms }
     }

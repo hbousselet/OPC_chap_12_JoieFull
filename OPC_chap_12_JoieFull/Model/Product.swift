@@ -8,7 +8,11 @@
 import Foundation
 
 // MARK: - Product
-struct Product: Codable, Identifiable, Sendable {
+struct Product: Codable, Identifiable, Sendable, Equatable, Hashable {
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     let id: Int
     let picture: Picture
     let name: String
@@ -24,7 +28,7 @@ struct Product: Codable, Identifiable, Sendable {
 }
 
 // MARK: - Picture
-struct Picture: Codable {
+struct Picture: Codable, Hashable {
     let url: String
     let description: String
 }

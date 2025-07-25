@@ -13,7 +13,8 @@ struct OPC_chap_12_JoieFullApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CatalogView()
+//            CatalogView()
+            OtherCatalogView()
                 .environment(clothes)
         }
     }

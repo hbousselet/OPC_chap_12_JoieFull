@@ -1,57 +1,55 @@
 //
-//  CatalogView.swift
+//  OtherCatalogView.swift
 //  OPC_chap_12_JoieFull
 //
-//  Created by Hugues BOUSSELET on 23/07/2025.
+//  Created by Hugues BOUSSELET on 25/07/2025.
 //
 
 import SwiftUI
 
-struct CatalogView: View {
+struct OtherCatalogView: View {
     @Environment(ClothesViewModel.self) private var clothes
-//    let rows = [GridItem(.adaptive(minimum: 148, maximum: 200))]
     let rows = [GridItem(.fixed(198))]
     
     @State private var isSelectedItem: Bool = false
     @State private var visibility: NavigationSplitViewVisibility = .all
-
+    
     
     @ViewBuilder
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    Section(header: Text("Tops").titleSection()) {
-                        customLazyHGrid(products: clothes.tops)
-                    }
-                    Section(header: Text("Bas").titleSection()) {
-                        customLazyHGrid(products: clothes.bottoms)
-                    }
-                    .padding(.bottom, 18)
-                    Section(header: Text("Sacs").titleSection()) {
-                        customLazyHGrid(products: clothes.accessories)
-                    }
-                    .padding(.bottom, 18)
-                    Section(header: Text("Chaussures").titleSection()) {
-                        customLazyHGrid(products: clothes.shoes)
-                    }
+                    listView()
                 }
                 .padding(.leading, 20)
             }
             .toolbar(.hidden, for: .navigationBar)
+            .navigationSplitViewColumnWidth(900)
         } detail: {
-            EmptyView()
         }
-//        .navigationSplitViewStyle(.prominentDetail)
+        .navigationSplitViewStyle(.balanced)
         .task(priority: .high) {
             await clothes.fetchProducts()
         }
     }
     
+    func listView() -> some View {
+        ForEach(Category.allCases, id: \.self) { category in
+            Section(header: Text(category.rawValue).titleSection()) {
+                if let productsOFCategory = clothes.groupedProducts[category.rawValue] {
+                    customLazyHGrid(products: productsOFCategory)
+                }
+            }
+        }
+    }
+    
     func customLazyHGrid(products: [Product]) -> some View {
+        NavigationStack {
             ScrollView(.horizontal) {
                 LazyHGrid(rows: rows) {
-                        ForEach(products) { product in
+                    ForEach(products) { product in
+                        NavigationLink(value: product, label: {
                             VStack(alignment: .leading) {
                                 ZStack(alignment: .bottomTrailing) {
                                     clothesImage(url: product.picture.url)
@@ -89,11 +87,15 @@ struct CatalogView: View {
                                 .padding(.horizontal, 8)
                             }
                             .accessibilityHint("Cliquer pour plus de détails")
-                        }
-                        .padding(.horizontal, 8)
-                    
+                        })
+                    }
+                    .padding(.horizontal, 8)
                 }
             }
+        }
+        .navigationDestination(for: Product.self) { country in
+            DummyView(product: country)
+        }
     }
     
     func clothesImage(url: String) -> some View {
