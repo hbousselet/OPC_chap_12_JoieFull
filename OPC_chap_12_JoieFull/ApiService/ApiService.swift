@@ -8,13 +8,15 @@
 import Foundation
 
 protocol ApiServiceProtocol {
-    func fetch<T: Decodable>() async throws -> Result<T, Error>
+    func fetch<T: DecodableSendable>() async throws -> Result<T, JoieFullError>
 }
 
-class ApiService {
+typealias DecodableSendable = Sendable & Decodable
+
+actor ApiService: ApiServiceProtocol {
     var session: URLSession = .shared
     
-    func fetch<T: Decodable>() async throws -> Result<T, JoieFullError> {
+    func fetch<T: DecodableSendable>() async throws -> Result<T, JoieFullError> {
         do {
             guard let url = URL.clothes else { return .failure(.wrongURL) }
             let (data, response) = try await URLSession.shared.data(from: url)

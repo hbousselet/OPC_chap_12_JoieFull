@@ -37,7 +37,7 @@ struct CatalogView: View {
         } detail: {
             Text("Select a product")
         }
-        .task {
+        .task(priority: .high) {
             await clothes.fetchProducts()
         }
     }

@@ -29,9 +29,7 @@ import Foundation
     
     func fetchProducts() async {
         do {
-            let result: [Product] = try await Task.detached {
-                try await self.apiService.fetch().get()
-            }.value
+            let result: [Product] = try await self.apiService.fetch().get()
             
             await MainActor.run {
                 self.products = result
