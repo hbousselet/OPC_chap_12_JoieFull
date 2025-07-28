@@ -7,52 +7,19 @@
 
 import Foundation
 
-@Observable final class ClothesViewModel: Sendable {
-    var products: [Product] = []
-    let apiService: ApiService = ApiService()
-    
-    var accessories: [Product] {
-        products.filter { $0.category == .accessories }
-    }
-    
-    var groupedProducts: [String: [Product]] {
-        Dictionary(grouping: products) { $0.category.rawValue }
-    }
-    
-    var bottoms: [Product] {
-        products.filter { $0.category == .bottoms }
-    }
-    
-    var shoes: [Product] {
-        products.filter { $0.category == .shoes }
-    }
-    
-    var tops: [Product] {
-        products.filter { $0.category == .tops }
-    }
-    
-    func fetchProducts() async {
-        do {
-            let result: [Product] = try await self.apiService.fetch().get()
-            
-            await MainActor.run {
-                self.products = result
-            }
-        } catch {
-            print(error)
-        }
-    }
-}
-
+// si class flag en MainActor alors il est Sendable + Attention, viewModel toujours sous MainActor !
 @MainActor
-@Observable class CothesViewModelVariance: Sendable {
-    var products: [Product] = []
-    let apiService: ApiService = ApiService()
+@Observable final class ClothesViewModel {
+    var products: [ProductViewModel] = []
+    let productService: ProductService = ProductService()
+    
+    var groupedProducts: [String: [ProductViewModel]] {
+        return Dictionary(grouping: products) { $0.category.rawValue }
+    }
     
     func fetchProducts() async {
         do {
-            let result: [Product] = try await apiService.fetch().get()
-            products = result
+            products = try await productService.fetch()
         } catch {
             print(error)
         }

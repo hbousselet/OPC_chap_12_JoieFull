@@ -1,5 +1,5 @@
 //
-//  OtherCatalogView.swift
+//  CatalogView.swift
 //  OPC_chap_12_JoieFull
 //
 //  Created by Hugues BOUSSELET on 25/07/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OtherCatalogView: View {
+struct CatalogView: View {
     @Environment(ClothesViewModel.self) private var clothes
     let rows = [GridItem(.fixed(198))]
     
@@ -20,7 +20,7 @@ struct OtherCatalogView: View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    listView()
+                    sectionView()
                 }
                 .padding(.leading, 20)
             }
@@ -34,17 +34,17 @@ struct OtherCatalogView: View {
         }
     }
     
-    func listView() -> some View {
-        ForEach(Category.allCases, id: \.self) { category in
+    private func sectionView() -> some View {
+        ForEach(ProductViewModel.ProductCategory.allCases, id: \.self) { category in
             Section(header: Text(category.rawValue).titleSection()) {
-                if let productsOFCategory = clothes.groupedProducts[category.rawValue] {
-                    customLazyHGrid(products: productsOFCategory)
+                if let productInCategories = clothes.groupedProducts[category.rawValue] {
+                    customLazyHGrid(products: productInCategories)
                 }
             }
         }
     }
     
-    func customLazyHGrid(products: [Product]) -> some View {
+    func customLazyHGrid(products: [ProductViewModel]) -> some View {
         NavigationStack {
             ScrollView(.horizontal) {
                 LazyHGrid(rows: rows) {
@@ -93,7 +93,7 @@ struct OtherCatalogView: View {
                 }
             }
         }
-        .navigationDestination(for: Product.self) { country in
+        .navigationDestination(for: ProductViewModel.self) { country in
             DummyView(product: country)
         }
     }

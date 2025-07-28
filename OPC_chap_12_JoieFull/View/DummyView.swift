@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DummyView: View {
-    var product: Product
+    var product: ProductViewModel
     var body: some View {
         Text(product.name)
     }

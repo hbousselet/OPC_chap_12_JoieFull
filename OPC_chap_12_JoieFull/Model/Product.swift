@@ -7,12 +7,9 @@
 
 import Foundation
 
+
 // MARK: - Product
-struct Product: Codable, Identifiable, Sendable, Equatable, Hashable {
-    static func == (lhs: Product, rhs: Product) -> Bool {
-        lhs.id == rhs.id
-    }
-    
+struct Product: Codable, Identifiable {
     let id: Int
     let picture: Picture
     let name: String
