@@ -7,14 +7,13 @@
 
 import Foundation
 
-protocol ApiServiceProtocol {
+protocol ApiServiceInterface: Sendable {
     func fetch<T: DecodableSendable>() async throws -> Result<T, JoieFullError>
 }
 
 typealias DecodableSendable = Sendable & Decodable
 
-actor ApiService: ApiServiceProtocol {
-    var session: URLSession = .shared
+final class ApiService: ApiServiceInterface {
     
     func fetch<T: DecodableSendable>() async throws -> Result<T, JoieFullError> {
         do {

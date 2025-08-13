@@ -7,13 +7,12 @@
 
 import Foundation
 
-// si class flag en MainActor alors il est Sendable + Attention, viewModel toujours sous MainActor !
 @MainActor
 @Observable final class ClothesViewModel {
-    var products: [ProductViewModel] = []
-    let productService: ProductService = ProductService()
+    private(set) var products: [Product] = []
+    private let productService: ProductService = ProductService()
     
-    var groupedProducts: [String: [ProductViewModel]] {
+    var groupedProducts: [String: [Product]] {
         return Dictionary(grouping: products) { $0.category.rawValue }
     }
     

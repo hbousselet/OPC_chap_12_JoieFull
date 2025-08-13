@@ -8,20 +8,20 @@
 import Foundation
 
 protocol ProductServiceLogic {
-    func fetch() async throws -> [ProductViewModel]
+    func fetch() async throws -> [Product]
 }
 
 actor ProductService: ProductServiceLogic {
     let apiService: ApiService = ApiService()
     
-    func fetch() async throws -> [ProductViewModel] {
-        let products: [Product] = try await apiService.fetch().get()
+    func fetch() async throws -> [Product] {
+        let products: [ProductResponseModel] = try await apiService.fetch().get()
         return convert(products)
     }
     
-    private func convert(_ products: [Product]) -> [ProductViewModel] {
+    private func convert(_ products: [ProductResponseModel]) -> [Product] {
         products.compactMap { product in
-            ProductViewModel(id: product.id,
+            Product(id: product.id,
                              picture: turn(picture: product.picture),
                              name: product.name,
                              category: turn(category: product.category),
@@ -31,11 +31,11 @@ actor ProductService: ProductServiceLogic {
         }
     }
     
-    private func turn(picture: Picture) -> ProductViewModel.Picture {
-        return ProductViewModel.Picture(url: picture.url, description: picture.description)
+    private func turn(picture: Picture) -> Product.Picture {
+        return Product.Picture(url: picture.url, description: picture.description)
     }
     
-    private func turn(category: Category) -> ProductViewModel.ProductCategory {
+    private func turn(category: Category) -> Product.ProductCategory {
         switch category {
         case .accessories:
             return .accessories
