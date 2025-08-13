@@ -15,6 +15,7 @@ struct Product: Hashable, Identifiable {
     let likes: Int
     let price: Double
     let originalPrice: Double
+    let isLiked: Bool
     
     struct Picture: Codable, Hashable {
         let url: String

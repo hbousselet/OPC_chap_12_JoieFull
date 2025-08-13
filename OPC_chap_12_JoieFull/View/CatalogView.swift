@@ -55,7 +55,7 @@ struct CatalogView: View {
                         NavigationLink(value: product, label: {
                             VStack(alignment: .leading) {
                                 ZStack(alignment: .bottomTrailing) {
-                                    ClothesViewBis(url: product.picture.url, width: 198, height: 198)
+                                    ClothesImage(url: product.picture.url, width: 198, height: 198)
                                     Likes()
                                         .padding(.bottom, 11.83)
                                         .padding(.trailing, 11.36)

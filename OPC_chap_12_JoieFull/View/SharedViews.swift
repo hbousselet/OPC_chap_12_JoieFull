@@ -12,25 +12,6 @@ struct ClothesImage: View {
     let url: String
     let width: CGFloat
     let height: CGFloat
-    
-    var body: some View {
-        AsyncImage(url: URL(string: url)) { image in
-            image
-                .resizable()
-                .scaledToFill()
-                .clipped()
-        } placeholder: {
-            ProgressView()
-        }
-        .frame(width: width, height: height)
-        .clipShape(RoundedRectangle(cornerRadius: 25))
-    }
-}
-
-struct ClothesViewBis: View {
-    let url: String
-    let width: CGFloat
-    let height: CGFloat
         
     var body: some View {
         AsyncImage(
@@ -50,7 +31,7 @@ struct ClothesViewBis: View {
                     .clipShape(RoundedRectangle(cornerRadius: 25))
             case .failure(let error):
                 if (error as? URLError)?.code == .cancelled {
-                    ClothesViewBis(url: url, width: width, height: height)
+                    ClothesImage(url: url, width: width, height: height)
                 } else {
                     Image(systemName: "exclamationmark.triangle")
                         .frame(width: width, height: height)
@@ -141,6 +122,6 @@ struct Likes: View {
                                                         category: Product.ProductCategory.accessories,
                                                         likes: Int(2.6),
                                                         price: 69.0,
-                                                        originalPrice: 80.0),
+                                               originalPrice: 80.0, isLiked: false),
                               displayDescription: true)
 }

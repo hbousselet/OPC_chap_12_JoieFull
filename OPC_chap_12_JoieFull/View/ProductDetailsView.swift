@@ -25,7 +25,7 @@ struct ProductDetailsView: View {
             VStack(alignment: .leading) {
                 ZStack(alignment: .topTrailing) {
                     ZStack(alignment: .bottomTrailing) {
-                        ClothesViewBis(url: product.picture.url,
+                        ClothesImage(url: product.picture.url,
                                        width: width() - 32,
                                        height: (1.2 * width()) - 32)
                         Likes()
@@ -64,5 +64,5 @@ struct ProductDetailsView: View {
                                                  category: Product.ProductCategory.accessories,
                                                  likes: 56,
                                                  price: 69.99,
-                                                 originalPrice: 69.99), review: "")
+                                        originalPrice: 69.99, isLiked: false), review: "")
 }

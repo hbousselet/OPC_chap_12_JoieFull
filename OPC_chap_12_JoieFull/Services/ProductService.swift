@@ -27,7 +27,8 @@ actor ProductService: ProductServiceLogic {
                              category: turn(category: product.category),
                              likes: product.likes,
                              price: product.price,
-                             originalPrice: product.originalPrice)
+                             originalPrice: product.originalPrice,
+                             isLiked: false)
         }
     }
     
