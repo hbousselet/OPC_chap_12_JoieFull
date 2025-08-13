@@ -23,4 +23,9 @@ import Foundation
             print(error)
         }
     }
+    
+    func toggleIsLiked(for product: Product) {
+        guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
+        products[index].toggleLike()
+    }
 }

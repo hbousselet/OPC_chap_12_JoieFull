@@ -15,7 +15,7 @@ struct Product: Hashable, Identifiable {
     let likes: Int
     let price: Double
     let originalPrice: Double
-    let isLiked: Bool
+    var isLiked: Bool
     
     struct Picture: Codable, Hashable {
         let url: String
@@ -27,5 +27,9 @@ struct Product: Hashable, Identifiable {
         case bottoms = "Bas"
         case shoes = "Chaussures"
         case tops = "Hauts"
+    }
+    
+    mutating func toggleLike() {
+        isLiked.toggle()
     }
 }

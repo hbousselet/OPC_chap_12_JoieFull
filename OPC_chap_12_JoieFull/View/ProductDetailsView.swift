@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductDetailsView: View {
+    @Environment(ClothesViewModel.self) private var clothes
     var product: Product
     let width = {
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -15,7 +16,6 @@ struct ProductDetailsView: View {
         } else {
             return UIScreen.main.bounds.width
         }
-        
     }
     
     @State var review: String
@@ -28,7 +28,7 @@ struct ProductDetailsView: View {
                         ClothesImage(url: product.picture.url,
                                        width: width() - 32,
                                        height: (1.2 * width()) - 32)
-                        Likes()
+                        Likes(productId: product.id)
                             .padding(.bottom, 11.83)
                             .padding(.trailing, 11.36)
                     }

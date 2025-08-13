@@ -99,19 +99,32 @@ struct DetailsProductDescription: View {
 }
 
 struct Likes: View {
-    let likes = 5
+    @Environment(ClothesViewModel.self) private var clothes
+    let productId: Int
+    
+    var product: Product? {
+        clothes.products.first(where: { $0.id == productId })
+    }
+    
     var body: some View {
-        Capsule()
-            .fill(.white)
-            .overlay(
-                HStack(alignment: .center) {
-                    Image(systemName: "heart")
-                        .font(.system(size: 14, weight: .semibold))
-                    Text(likes.description)
-                }
-                    .foregroundStyle(.black)
-            )
-            .frame(width: 49.11, height: 26.84)
+        if let product {
+            Capsule()
+                .fill(.white)
+                .overlay(
+                    HStack(alignment: .center) {
+                        Image(systemName: product.isLiked ? "heart.fill" : "heart")
+                            .font(.system(size: 14, weight: .semibold))
+                        Text(product.likes.description)
+                    }
+                        .foregroundStyle(.black)
+                )
+                .frame(width: 49.11, height: 26.84)
+                .onTapGesture {
+                clothes.toggleIsLiked(for: product)
+            }
+        } else {
+            Text("Not able to find the product")
+        }
     }
 }
 
