@@ -123,6 +123,11 @@ struct Likes: View {
                 .frame(width: 49.11, height: 26.84)
                 .onTapGesture {
                 clothes.toggleIsLiked(for: product)
+                    if product.isLiked {
+                        clothes.removeLike(for: product)
+                    } else {
+                        clothes.addLike(for: product)
+                    }
             }
         } else {
             Text("Not able to find the product")

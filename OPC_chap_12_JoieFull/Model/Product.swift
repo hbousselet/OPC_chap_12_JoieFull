@@ -13,7 +13,7 @@ struct Product: Hashable, Identifiable {
     let picture: Picture
     let name: String
     let category: ProductCategory
-    let likes: Int
+    var likes: Int
     let price: Double
     let originalPrice: Double
     var isLiked: Bool
@@ -35,5 +35,15 @@ struct Product: Hashable, Identifiable {
     
     mutating func toggleLike() {
         isLiked.toggle()
+    }
+    
+    mutating func removeALike() {
+        if likes > 0 {
+            likes -= 1
+        }
+    }
+    
+    mutating func addALike() {
+        likes += 1
     }
 }

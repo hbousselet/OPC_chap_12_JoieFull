@@ -39,7 +39,9 @@ struct ProductDetailsView: View {
                             }
                         }
                         if needImageInFullScreen == false {
-                            ShareLink(item: URL(string: product.picture.url)!, subject: Text("Share the product with your friends"), message: Text("Share the following product with your friends: ")) {
+                            ShareLink(item: URL(string: product.picture.url)!,
+                                      subject: Text("Share the product with your friends"),
+                                      message: Text("Share the following product with your friends: ")) {
                                 Image(systemName: "square.and.arrow.up")
                             }
                                 .zIndex(1)
@@ -66,16 +68,6 @@ struct ProductDetailsView: View {
     }
     
     @State var review: String
-    
-//    private func share() -> some View {
-//        if let imageLink = URL(string: product.picture.url) {
-//            ShareLink(item: imageLink) {
-//                Label("Spread the word about this magnificient product", systemImage: "square.and.arrow.up")
-//            }
-//        } else {
-//            Image(systemName: "square.and.arrow.up")
-//        }
-//    }
     
     private func ratings() -> some View {
         

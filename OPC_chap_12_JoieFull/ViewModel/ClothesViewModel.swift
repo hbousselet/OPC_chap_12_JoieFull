@@ -29,4 +29,14 @@ import Foundation
         guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
         products[index].toggleLike()
     }
+    
+    func removeLike(for product: Product) {
+        guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
+        products[index].removeALike()
+    }
+    
+    func addLike(for product: Product) {
+        guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
+        products[index].addALike()
+    }
 }
