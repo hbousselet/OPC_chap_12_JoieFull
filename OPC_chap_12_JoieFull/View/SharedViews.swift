@@ -31,14 +31,16 @@ struct ClothesImage: View {
                     .clipShape(RoundedRectangle(cornerRadius: 25))
             case .failure(let error):
                 if (error as? URLError)?.code == .cancelled {
-                    ClothesImage(url: url, width: width, height: height)
+                    Image("bag")
+                        //rajouter logique de max retries
+//                    ClothesImage(url: url, width: width, height: height)
                 } else {
                     Image(systemName: "exclamationmark.triangle")
                         .frame(width: width, height: height)
                         .clipShape(RoundedRectangle(cornerRadius: 25))
                 }
             default:
-                Image(systemName: "photo")
+                Image("bag")
                     .frame(width: width, height: height)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
             }

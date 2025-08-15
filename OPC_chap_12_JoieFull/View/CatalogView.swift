@@ -17,7 +17,7 @@ struct CatalogView: View {
     
     @ViewBuilder
     var body: some View {
-        NavigationSplitView(columnVisibility: .constant(.all)) {
+        NavigationSplitView(columnVisibility: .constant(.automatic)) {
             ScrollView(.vertical) {
                 if clothes.products.isEmpty {
                     ProgressView()
@@ -28,7 +28,7 @@ struct CatalogView: View {
                     .padding(.leading, 17)
                 }
             }
-//            .toolbar(.hidden, for: .navigationBar)
+            .toolbar(.hidden, for: .navigationBar)
             .navigationSplitViewColumnWidth(screenWidth * 0.64)
         } detail: {
         }
