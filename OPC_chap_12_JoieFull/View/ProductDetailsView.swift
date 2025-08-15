@@ -54,6 +54,13 @@ struct ProductDetailsView: View {
                     if needImageInFullScreen == false {
                         DetailsProductDescription(product: product, displayDescription: true)
                             .padding(.top, 8)
+                        HStack(alignment: .center) {
+                            Profile()
+                                .frame(width: 43, height: 39)
+                            Evaluation()
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 5)
                     }
                 }
             }
@@ -84,5 +91,5 @@ struct ProductDetailsView: View {
                                                  category: Product.ProductCategory.accessories,
                                                  likes: 56,
                                                  price: 69.99,
-                                        originalPrice: 69.99, isLiked: false), review: "")
+                                        originalPrice: 69.99, isLiked: false, evaluation: 2.3), review: "")
 }

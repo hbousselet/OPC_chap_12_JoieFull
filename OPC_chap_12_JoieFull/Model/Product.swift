@@ -17,6 +17,7 @@ struct Product: Hashable, Identifiable {
     let price: Double
     let originalPrice: Double
     var isLiked: Bool
+    let evaluation: Double
     
     struct Picture: Codable, Hashable, Transferable {
         static var transferRepresentation: some TransferRepresentation {

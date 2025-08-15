@@ -32,6 +32,8 @@ struct ClothesImage: View {
             case .failure(let error):
                 if (error as? URLError)?.code == .cancelled {
                     Image("bag")
+                        .frame(width: width, height: height)
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
                         //rajouter logique de max retries
 //                    ClothesImage(url: url, width: width, height: height)
                 } else {
@@ -71,7 +73,7 @@ struct DetailsProductDescription: View {
                 HStack() {
                     Image(systemName: "star.fill")
                         .foregroundStyle(.orange)
-                    Text("\(Double.random(in: 1...5), specifier: "%.1f")")
+                    Text("\(product.evaluation, specifier: "%.1f")")
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.black)
                 }
@@ -135,6 +137,34 @@ struct Likes: View {
     }
 }
 
+struct Profile: View {
+    var body: some View {
+        Image("Charlie")
+            .resizable()
+            .scaledToFill()
+            .clipShape(Circle())
+            .background(.white)
+            .frame(width: 43, height: 39)
+    }
+}
+
+struct Evaluation: View {
+    @State var rating: Int = -1
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            ForEach(0...5, id: \.self) { index in
+                Image(systemName: index <= rating ? "star.fill" : "star")
+                    .foregroundStyle(index <= rating ? .yellow : .gray)
+                    .frame(width: 28, height: 24)
+                    .onTapGesture {
+                        rating = index
+                    }
+            }
+        }
+    }
+}
+
 #Preview {
     DetailsProductDescription(product: Product(id: 1,
                                                         picture: Product.Picture(url: "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/Cr-ez-une-interface-dynamique-et-accessible-avec-SwiftUI/main/img/shoes/1.jpg", description: "Modèle femme qui pose dans la rue en bottes de pluie noires"),
@@ -142,6 +172,6 @@ struct Likes: View {
                                                         category: Product.ProductCategory.accessories,
                                                         likes: Int(2.6),
                                                         price: 69.0,
-                                               originalPrice: 80.0, isLiked: false),
+                                               originalPrice: 80.0, isLiked: false, evaluation: 5.0),
                               displayDescription: true)
 }

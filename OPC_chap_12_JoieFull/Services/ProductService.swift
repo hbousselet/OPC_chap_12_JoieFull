@@ -28,7 +28,8 @@ actor ProductService: ProductServiceLogic {
                              likes: product.likes,
                              price: product.price,
                              originalPrice: product.originalPrice,
-                             isLiked: false)
+                             isLiked: false,
+                             evaluation: Double.random(in: 0.1...5.0))
         }
     }
     
