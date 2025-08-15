@@ -30,7 +30,7 @@ struct ProductDetailsView: View {
                                     }
                             )
                             .onTapGesture {
-                                withAnimation(.spring(duration: 3)) {
+                                withAnimation(.spring(duration: 0.5)) {
                                     needImageInFullScreen.toggle()
                                 }
                             }
@@ -96,5 +96,5 @@ struct ProductDetailsView: View {
                                                  category: Product.ProductCategory.accessories,
                                                  likes: 56,
                                                  price: 69.99,
-                                        originalPrice: 69.99, isLiked: false, evaluation: 2.3), review: "")
+                                        originalPrice: 69.99, isLiked: false, evaluation: 2.3, accessibilityLabel: "Coucou"), review: "")
 }

@@ -14,13 +14,19 @@ struct CatalogView: View {
     @State private var isSelectedItem: Bool = false
     let screenWidth = UIScreen.main.bounds.width
     
+    @State private var preferredColumn =
+        NavigationSplitViewColumn.sidebar
+    
     
     @ViewBuilder
     var body: some View {
-        NavigationSplitView(columnVisibility: .constant(.automatic)) {
+        NavigationSplitView(preferredCompactColumn: $preferredColumn) {
             ScrollView(.vertical) {
                 if clothes.products.isEmpty {
-                    ProgressView()
+                    VStack(alignment: .center) {
+                        ProgressView()
+                            .position(.zero)
+                    }
                 } else {
                     VStack(alignment: .leading) {
                         sectionView()
@@ -66,8 +72,8 @@ struct CatalogView: View {
                                 DetailsProductDescription(product: product)
                                     .padding(.horizontal, 4)
                             }
-                            .accessibilityHint("Cliquer pour plus de détails")
                         })
+                        .accessibilityLabel(product.accessibilityLabel)
                     }
                 }
             }

@@ -192,6 +192,6 @@ struct Commentary: View {
                                                         category: Product.ProductCategory.accessories,
                                                         likes: Int(2.6),
                                                         price: 69.0,
-                                               originalPrice: 80.0, isLiked: false, evaluation: 5.0),
+                                               originalPrice: 80.0, isLiked: false, evaluation: 5.0, accessibilityLabel: "Coucou"),
                               displayDescription: true)
 }

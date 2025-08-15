@@ -29,7 +29,8 @@ actor ProductService: ProductServiceLogic {
                              price: product.price,
                              originalPrice: product.originalPrice,
                              isLiked: false,
-                             evaluation: Double.random(in: 0.1...5.0))
+                             evaluation: Double.random(in: 0.1...5.0),
+                    accessibilityLabel: "Nom du produit \(product.name), qui coûte \(String(product.price)) et qui a pour description \(product.picture.description)")
         }
     }
     
