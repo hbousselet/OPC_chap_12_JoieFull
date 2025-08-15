@@ -61,6 +61,9 @@ struct ProductDetailsView: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.top, 5)
+                        Commentary()
+                            .padding(.horizontal, 16)
+                            .padding(.top, 5)
                     }
                 }
             }

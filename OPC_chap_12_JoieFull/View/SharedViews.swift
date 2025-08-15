@@ -165,6 +165,23 @@ struct Evaluation: View {
     }
 }
 
+struct Commentary: View {
+    @State var comment: String = ""
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .stroke(lineWidth: 1)
+            .foregroundStyle(.gray)
+            .frame(height: 120)
+            .overlay(alignment:.top) {
+                TextField("Partagez ici vos impressions sur cette pièce", text: $comment)
+                    .font(.system(size: 14, weight: .regular))
+                    .padding(.top, 5)
+                    .padding(.horizontal)
+            }
+    }
+}
+
 #Preview {
     DetailsProductDescription(product: Product(id: 1,
                                                         picture: Product.Picture(url: "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/Cr-ez-une-interface-dynamique-et-accessible-avec-SwiftUI/main/img/shoes/1.jpg", description: "Modèle femme qui pose dans la rue en bottes de pluie noires"),
