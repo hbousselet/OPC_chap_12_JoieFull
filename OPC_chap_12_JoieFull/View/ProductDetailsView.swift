@@ -45,7 +45,7 @@ struct ProductDetailsView: View {
                             ShareLink(item: URL(string: product.picture.url)!,
                                       subject: Text("Share the product with your friends"),
                                       message: Text("Share the following product with your friends: ")) {
-                                Image(systemName: "square.and.arrow.up")
+                                Image("Partager")
                                     .accessibilityHidden(true)
                             }
                                 .zIndex(1)
