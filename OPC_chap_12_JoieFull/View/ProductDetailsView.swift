@@ -30,7 +30,9 @@ struct ProductDetailsView: View {
                                     }
                             )
                             .onTapGesture {
-                                needImageInFullScreen.toggle()
+                                withAnimation(.spring(duration: 3)) {
+                                    needImageInFullScreen.toggle()
+                                }
                             }
                             if needImageInFullScreen == false {
                                 Likes(productId: product.id)

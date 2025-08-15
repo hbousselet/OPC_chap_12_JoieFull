@@ -12,6 +12,7 @@ struct ClothesImage: View {
     let url: String
     let width: CGFloat
     let height: CGFloat
+    var alreadyRetried: Bool = false
         
     var body: some View {
         AsyncImage(
@@ -31,11 +32,13 @@ struct ClothesImage: View {
                     .clipShape(RoundedRectangle(cornerRadius: 25))
             case .failure(let error):
                 if (error as? URLError)?.code == .cancelled {
-                    Image("bag")
-                        .frame(width: width, height: height)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                        //rajouter logique de max retries
-//                    ClothesImage(url: url, width: width, height: height)
+                    if alreadyRetried {
+                        Image("bag")
+                            .frame(width: width, height: height)
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                    } else {
+                        ClothesImage(url: url, width: width, height: height, alreadyRetried: true)
+                    }
                 } else {
                     Image(systemName: "exclamationmark.triangle")
                         .frame(width: width, height: height)
