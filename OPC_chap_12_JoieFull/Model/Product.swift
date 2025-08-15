@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreTransferable
 
 struct Product: Hashable, Identifiable {
     let id: Int
@@ -17,7 +18,10 @@ struct Product: Hashable, Identifiable {
     let originalPrice: Double
     var isLiked: Bool
     
-    struct Picture: Codable, Hashable {
+    struct Picture: Codable, Hashable, Transferable {
+        static var transferRepresentation: some TransferRepresentation {
+            ProxyRepresentation(exporting: \.url)
+        }
         let url: String
         let description: String
     }
