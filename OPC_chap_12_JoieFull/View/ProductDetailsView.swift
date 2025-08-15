@@ -38,6 +38,7 @@ struct ProductDetailsView: View {
                                 Likes(productId: product.id)
                                     .padding(.bottom, 11.83)
                                     .padding(.trailing, 11.36)
+                                    .accessibilityHidden(true)
                             }
                         }
                         if needImageInFullScreen == false {
@@ -45,6 +46,7 @@ struct ProductDetailsView: View {
                                       subject: Text("Share the product with your friends"),
                                       message: Text("Share the following product with your friends: ")) {
                                 Image(systemName: "square.and.arrow.up")
+                                    .accessibilityHidden(true)
                             }
                                 .zIndex(1)
                                 .foregroundStyle(.white)
@@ -56,6 +58,8 @@ struct ProductDetailsView: View {
                     if needImageInFullScreen == false {
                         DetailsProductDescription(product: product, displayDescription: true)
                             .padding(.top, 8)
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel(product.accessibilityLabel)
                         HStack(alignment: .center) {
                             Profile()
                                 .frame(width: 43, height: 39)
@@ -63,9 +67,12 @@ struct ProductDetailsView: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(.top, 5)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("Evaluer le produit")
                         Commentary()
                             .padding(.horizontal, 16)
                             .padding(.top, 5)
+                            .accessibilityLabel("Commenter le produit")
                     }
                 }
             }
