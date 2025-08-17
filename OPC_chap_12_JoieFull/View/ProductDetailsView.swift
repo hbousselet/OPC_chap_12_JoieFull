@@ -48,10 +48,11 @@ struct ProductDetailsView: View {
                                 Image("Partager")
                                     .accessibilityHidden(true)
                             }
+                                      .frame(width: 18, height: 18)
                                 .zIndex(1)
                                 .foregroundStyle(.white)
-                                .padding(.top, 10)
-                                .padding(.trailing, 11.36)
+                                .padding(.top, 20)
+                                .padding(.trailing, 17)
                         }
                     }
                     .padding(.horizontal, 16)
