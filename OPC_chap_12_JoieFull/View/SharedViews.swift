@@ -123,9 +123,10 @@ struct Likes: View {
                             .font(.system(size: 14, weight: .semibold))
                         Text(product.likes.description)
                     }
+                        .padding(.vertical, 4)
                         .foregroundStyle(.black)
                 )
-                .frame(width: 49.11, height: 26.84)
+                .frame(width: 51, height: 27)
                 .onTapGesture {
                 clothes.toggleIsLiked(for: product)
                     if product.isLiked {
