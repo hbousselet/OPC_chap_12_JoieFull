@@ -63,6 +63,7 @@ struct CatalogView: View {
                                 ZStack(alignment: .bottomTrailing) {
                                     ClothesImage(url: product.picture.url, width: 198, height: 198)
                                     Likes(productId: product.id)
+                                        .frame(width: 51, height: 27)
                                         .padding(.bottom, 11.83)
                                         .padding(.trailing, 11.36)
                                 }

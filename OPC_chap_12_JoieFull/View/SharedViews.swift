@@ -126,7 +126,6 @@ struct Likes: View {
                         .padding(.vertical, 4)
                         .foregroundStyle(.black)
                 )
-                .frame(width: 51, height: 27)
                 .onTapGesture {
                 clothes.toggleIsLiked(for: product)
                     if product.isLiked {

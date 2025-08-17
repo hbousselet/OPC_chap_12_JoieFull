@@ -36,8 +36,9 @@ struct ProductDetailsView: View {
                             }
                             if needImageInFullScreen == false {
                                 Likes(productId: product.id)
-                                    .padding(.bottom, 11.83)
-                                    .padding(.trailing, 11.36)
+                                    .frame(width: 77, height: 33)
+                                    .padding(.bottom, 14)
+                                    .padding(.trailing, 17)
                                     .accessibilityHidden(true)
                             }
                         }
