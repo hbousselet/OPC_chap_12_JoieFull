@@ -13,8 +13,10 @@ struct OPC_chap_12_JoieFullApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CatalogView()
+            CatalogViewV2()
                 .environment(clothes)
+            //verifier si on augmente la taille de la font par défaut le layout doit suivre
+            // modifier la vue pour iPad et iPhone afin de ne pas utiliser la partie native (distinguer iPhone et iPad si Ipad créer un nouveau splitView ?)
         }
     }
 }

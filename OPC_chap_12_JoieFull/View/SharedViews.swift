@@ -56,7 +56,6 @@ struct ClothesImage: View {
 struct DetailsProductDescription: View {
     let product: Product
     var displayDescription: Bool = false
-    @State var coucou: String = ""
     
     var productName: String {
         if product.name.count > 15 && displayDescription == false {

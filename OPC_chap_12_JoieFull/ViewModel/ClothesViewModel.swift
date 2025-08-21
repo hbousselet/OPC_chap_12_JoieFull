@@ -19,7 +19,6 @@ import Foundation
     func fetchProducts() async {
         do {
             products = try await productService.fetch()
-            print("Products: \(products)")
         } catch {
             print(error)
         }
