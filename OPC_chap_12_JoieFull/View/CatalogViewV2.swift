@@ -9,13 +9,10 @@ import SwiftUI
 
 struct CatalogViewV2: View {
     @Environment(ClothesViewModel.self) private var clothes
-    let rows = [GridItem(.fixed(198))]
-    
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    
     @State private var currentSelectedProduct: Product?
-    let screenWidth = UIScreen.main.bounds.width
-    let detailViewWidth = UIScreen.main.bounds.width * 0.36
+
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    private var detailViewWidth = UIScreen.main.bounds.width * 0.36
     
     var body: some View {
         NavigationStack {
@@ -53,12 +50,11 @@ struct CatalogViewV2: View {
                 ForEach(Product.ProductCategory.allCases, id: \.self) { category in
                     Section(header: Text(category.rawValue).titleSection()) {
                         if let productInCategories = clothes.groupedProducts[category.rawValue] {
-                            if idiom == .phone {
-                                customHGridforPhone(products: productInCategories)
-                            } else {
+                            if idiom == .pad {
                                 customHGridForPad(products: productInCategories)
+                            } else {
+                                customHGridforPhone(products: productInCategories)
                             }
-                            
                         }
                     }
                 }
@@ -92,7 +88,7 @@ struct CatalogViewV2: View {
         }
     }
     
-    func customHGridforPhone(products: [Product]) -> some View {
+    private func customHGridforPhone(products: [Product]) -> some View {
         NavigationStack {
             ScrollView(.horizontal) {
                 HStack {
