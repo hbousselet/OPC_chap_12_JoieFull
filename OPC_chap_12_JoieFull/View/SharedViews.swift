@@ -76,9 +76,10 @@ struct DetailsProductDescription: View {
                     Image(systemName: "star.fill")
                         .foregroundStyle(.orange)
                     Text("\(product.evaluation, specifier: "%.1f")")
-                        .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.black)
                 }
+                .font(.system(size: 14, weight: .regular))
+                .fixedSize(horizontal: false, vertical: true)
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("Rating: \(Double.random(in: 1...5), specifier: "%.1f")")
             }
@@ -106,6 +107,8 @@ struct DetailsProductDescription: View {
 
 struct Likes: View {
     @Environment(ClothesViewModel.self) private var clothes
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     let productId: Int
     
     var product: Product? {
@@ -119,9 +122,10 @@ struct Likes: View {
                 .overlay(
                     HStack(alignment: .center) {
                         Image(systemName: product.isLiked ? "heart.fill" : "heart")
-                            .font(.system(size: 14, weight: .semibold))
                         Text(product.likes.description)
                     }
+                        .font(.system(size: 14, weight: .semibold))
+                        .fixedSize(horizontal: true, vertical: true)
                         .padding(.vertical, 4)
                         .foregroundStyle(.black)
                 )
@@ -155,10 +159,12 @@ struct Evaluation: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            ForEach(0...5, id: \.self) { index in
+            ForEach(0..<5, id: \.self) { index in
                 Image(systemName: index <= rating ? "star.fill" : "star")
                     .foregroundStyle(index <= rating ? .yellow : .gray)
                     .frame(width: 28, height: 24)
+                    .font(.system(size: 20))
+                    .fixedSize(horizontal: true, vertical: true)
                     .onTapGesture {
                         rating = index
                     }

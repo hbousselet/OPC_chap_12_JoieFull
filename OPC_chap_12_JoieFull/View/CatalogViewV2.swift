@@ -1,5 +1,5 @@
 //
-//  CatalogViewV2.swift
+//  CatalogView.swift
 //  OPC_chap_12_JoieFull
 //
 //  Created by Hugues BOUSSELET on 21/08/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CatalogViewV2: View {
+struct CatalogView: View {
     @Environment(ClothesViewModel.self) private var clothes
     @State private var currentSelectedProduct: Product?
 
@@ -68,7 +68,7 @@ struct CatalogViewV2: View {
                 ForEach(products) { product in
                     VStack(alignment: .leading) {
                         ZStack(alignment: .bottomTrailing) {
-                            ClothesImage(url: product.picture.url, width: 198, height: 198)
+                            ClothesImage(url: product.picture.url, width: 221, height: 254)
                             Likes(productId: product.id)
                                 .frame(width: 51, height: 27)
                                 .padding(.bottom, 11.83)
@@ -79,10 +79,14 @@ struct CatalogViewV2: View {
                         .padding(.horizontal, 4)
                         DetailsProductDescription(product: product)
                             .padding(.horizontal, 4)
+                            .accessibilityElement(children: .combine)
+                            .accessibilityHidden(true)
                     }
                     .onTapGesture {
                         currentSelectedProduct = product
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel(product.accessibilityLabel)
                 }
             }
         }
@@ -129,5 +133,5 @@ private func showProgressView() -> some View {
 }
 
 #Preview {
-    CatalogViewV2()
+    CatalogView()
 }
