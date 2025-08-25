@@ -26,7 +26,7 @@ struct CatalogView: View {
                                 .padding(.leading, 17)
                             if let selectedProduct = currentSelectedProduct {
                                 Divider()
-                                ProductDetailsView(product: selectedProduct, review: "")
+                                ProductDetailsView(product: selectedProduct)
                                     .frame(width: detailViewWidth)
                             }
                         }
@@ -52,6 +52,9 @@ struct CatalogView: View {
                         if let productInCategories = clothes.groupedProducts[category.rawValue] {
                             if idiom == .pad {
                                 customHGridForPad(products: productInCategories)
+                                    .onTapGesture {
+                                        currentSelectedProduct = nil
+                                    }
                             } else {
                                 customHGridforPhone(products: productInCategories)
                             }
@@ -83,6 +86,7 @@ struct CatalogView: View {
                             .accessibilityHidden(true)
                     }
                     .onTapGesture {
+                        print("On tape sur : \(product.name)")
                         currentSelectedProduct = product
                     }
                     .accessibilityElement(children: .combine)
@@ -118,7 +122,7 @@ struct CatalogView: View {
                 }
             }
             .navigationDestination(for: Product.self) { product in
-                ProductDetailsView(product: product, review: "")
+                ProductDetailsView(product: product)
             }
         }
     }

@@ -87,9 +87,7 @@ struct ProductDetailsView: View {
             return UIScreen.main.bounds.width
         }
     }
-    
-    @State var review: String
-    
+        
     private func ratings() -> some View {
         
         HStack {
@@ -105,5 +103,5 @@ struct ProductDetailsView: View {
                                                  category: Product.ProductCategory.accessories,
                                                  likes: 56,
                                                  price: 69.99,
-                                        originalPrice: 69.99, isLiked: false, evaluation: 2.3, accessibilityLabel: "Coucou"), review: "")
+                                        originalPrice: 69.99, isLiked: false, evaluation: 2.3, accessibilityLabel: "Coucou"))
 }
