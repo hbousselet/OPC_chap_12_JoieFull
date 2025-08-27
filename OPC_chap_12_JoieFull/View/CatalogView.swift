@@ -10,7 +10,6 @@ import SwiftUI
 struct CatalogView: View {
     @Environment(ClothesViewModel.self) private var clothes
     @State private var currentSelectedProduct: Product?
-    
     @ScaledMetric(relativeTo: .body) private var imageFrameWidth: CGFloat = {
         UIDevice.current.userInterfaceIdiom == .pad ? 221 : 198
     }()
@@ -19,8 +18,6 @@ struct CatalogView: View {
     }()
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    private var detailViewWidth = UIScreen.main.bounds.width * 0.36
-    
     
     var body: some View {
         NavigationStack {
@@ -29,13 +26,15 @@ struct CatalogView: View {
             } else {
                 VStack(alignment: .leading) {
                     if idiom == .pad {
-                        HStack(alignment: .center) {
-                            sectionView()
-                                .padding(.leading, 17)
-                            if let selectedProduct = currentSelectedProduct {
-                                Divider()
-                                ProductDetailsView(product: selectedProduct)
-                                    .frame(width: detailViewWidth)
+                        GeometryReader { geometry in
+                            HStack(alignment: .center) {
+                                sectionView()
+                                    .padding(.leading, 17)
+                                if let selectedProduct = currentSelectedProduct {
+                                    Divider()
+                                    ProductDetailsView(product: selectedProduct)
+                                        .frame(width: geometry.size.width * 0.36)
+                                }
                             }
                         }
                     } else {

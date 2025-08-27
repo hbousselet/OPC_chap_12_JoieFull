@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductDetailsView: View {
     @Environment(ClothesViewModel.self) private var clothes
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     var product: Product
     
     @State var needImageInFullScreen: Bool = false
@@ -17,84 +19,74 @@ struct ProductDetailsView: View {
     @ScaledMetric private var bottomPadding: CGFloat = 14
     @ScaledMetric private var trailingPadding: CGFloat = 17
     
+    @ScaledMetric private var shareViewWidth: CGFloat = 18
+    @ScaledMetric private var shareViewHeight: CGFloat = 18
+    
     var body: some View {
             ScrollView {
-                VStack(alignment: .leading) {
-                    ZStack(alignment: .topTrailing) {
-                        ZStack(alignment: .bottomTrailing) {
-                            ClothesImage(url: product.picture.url)
-                            .frame(width: width() - 32, height: (1.2 * width()) - 32)
-                            .clipShape(RoundedRectangle(cornerRadius: 25))
-                            .scaleEffect(needImageInFullScreen ? zoom : 1)
-                            .gesture(
-                                MagnifyGesture()
-                                    .updating($zoom) { value, gestureState, transaction in
-                                        gestureState = value.magnification
+                GeometryReader { geometry in
+                    VStack(alignment: .leading) {
+                        ZStack(alignment: .topTrailing) {
+                            ZStack(alignment: .bottomTrailing) {
+                                ClothesImage(url: product.picture.url)
+                                    .frame(width: geometry.size.width - 32, height: (1.2 * geometry.size.width) - 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 25))
+                                .scaleEffect(needImageInFullScreen ? zoom : 1)
+                                .gesture(
+                                    MagnifyGesture()
+                                        .updating($zoom) { value, gestureState, transaction in
+                                            gestureState = value.magnification
+                                        }
+                                )
+                                .onTapGesture {
+                                    withAnimation(.spring(duration: 0.5)) {
+                                        needImageInFullScreen.toggle()
                                     }
-                            )
-                            .onTapGesture {
-                                withAnimation(.spring(duration: 0.5)) {
-                                    needImageInFullScreen.toggle()
+                                }
+                                if needImageInFullScreen == false {
+                                    Likes(productId: product.id)
+                                        .padding(.bottom, bottomPadding)
+                                        .padding(.trailing, trailingPadding)
+                                        .accessibilityHidden(true)
                                 }
                             }
                             if needImageInFullScreen == false {
-                                Likes(productId: product.id)
-                                    .padding(.bottom, bottomPadding)
-                                    .padding(.trailing, trailingPadding)
-                                    .accessibilityHidden(true)
+                                ShareLink(item: URL(string: product.picture.url)!,
+                                          subject: Text("Partager le produit avec vos amis"),
+                                          message: Text("Partager l'image du produit avec vos amis: ")) {
+                                    Image("Partager")
+                                        .accessibilityHidden(true)
+                                }
+                                          .frame(width: shareViewWidth, height: shareViewHeight)
+                                    .zIndex(1)
+                                    .foregroundStyle(.white)
+                                    .padding(.top, 20)
+                                    .padding(.trailing, 17)
                             }
-                        }
-                        if needImageInFullScreen == false {
-                            ShareLink(item: URL(string: product.picture.url)!,
-                                      subject: Text("Share the product with your friends"),
-                                      message: Text("Share the following product with your friends: ")) {
-                                Image("Partager")
-                                    .accessibilityHidden(true)
-                            }
-                                      .frame(width: 18, height: 18)
-                                .zIndex(1)
-                                .foregroundStyle(.white)
-                                .padding(.top, 20)
-                                .padding(.trailing, 17)
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    if needImageInFullScreen == false {
-                        DetailsProductDescription(product: product, displayDescription: true)
-                            .padding(.top, 8)
-                            .accessibilityElement(children: .combine)
-                            .accessibilityLabel(product.accessibilityLabel)
-                        HStack(alignment: .center) {
-                            Profile()
-                                .frame(width: 43, height: 39)
-                            Evaluation()
                         }
                         .padding(.horizontal, 16)
-                        .padding(.top, 5)
-                        .accessibilityElement(children: .combine)
-                        .accessibilityLabel("Evaluer le produit")
-                        Commentary()
+                        if needImageInFullScreen == false {
+                            DetailsProductDescription(product: product, displayDescription: true)
+                                .padding(.top, 8)
+                                .accessibilityElement(children: .combine)
+                                .accessibilityLabel(product.accessibilityLabel)
+                            HStack(alignment: .center) {
+                                Profile()
+                                Evaluation()
+                            }
                             .padding(.horizontal, 16)
                             .padding(.top, 5)
-                            .accessibilityLabel("Commenter le produit")
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel("Evaluer le produit")
+                            Commentary()
+                                .padding(.horizontal, 16)
+                                .padding(.top, 5)
+                                .accessibilityLabel("Commenter le produit")
+                        }
                     }
+
                 }
             }
-    }
-    
-    let width = {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return UIScreen.main.bounds.width * 0.36
-        } else {
-            return UIScreen.main.bounds.width
-        }
-    }
-        
-    private func ratings() -> some View {
-        
-        HStack {
-            
-        }
     }
 }
 

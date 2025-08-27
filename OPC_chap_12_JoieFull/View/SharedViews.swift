@@ -12,23 +12,25 @@ struct ClothesImage: View {
     let url: String
     
     var body: some View {
-        AsyncImage(
-            url: URL(string: url),
-            transaction: Transaction(animation: .easeInOut)) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .transition(.scale(scale: 0.1, anchor: .center))
-                case .failure(let error):
-                    Image(systemName: "wifi.slash")
-                default:
-                    Image("bag")
+        GeometryReader { geometry in
+            AsyncImage(
+                url: URL(string: url),
+                transaction: Transaction(animation: .easeInOut)) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .transition(.scale(scale: 0.1, anchor: .center))
+                    case .failure(_):
+                        Image(systemName: "wifi.slash")
+                    default:
+                        Image("bag")
+                    }
                 }
-            }
+        }
     }
 }
 
@@ -154,15 +156,18 @@ struct Profile: View {
 
 struct Evaluation: View {
     @State var rating: Int = -1
+    @ScaledMetric(relativeTo: .body) private var width: CGFloat = 28
+    @ScaledMetric(relativeTo: .body) private var height: CGFloat = 24
     
     var body: some View {
         HStack(alignment: .center) {
             ForEach(0..<5, id: \.self) { index in
                 Image(systemName: index <= rating ? "star.fill" : "star")
                     .foregroundStyle(index <= rating ? .yellow : .gray)
-                    .frame(width: 28, height: 24)
-                    .font(.system(size: 20))
-                    .fixedSize(horizontal: true, vertical: true)
+                    .frame(width: width, height: height)
+                    .font(.body)
+//                    .font(.system(size: 20))
+//                    .fixedSize(horizontal: true, vertical: true)
                     .onTapGesture {
                         rating = index
                     }
