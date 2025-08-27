@@ -19,9 +19,9 @@ struct ProductDetailsView: View {
                 VStack(alignment: .leading) {
                     ZStack(alignment: .topTrailing) {
                         ZStack(alignment: .bottomTrailing) {
-                            ClothesImage(url: product.picture.url,
-                                         width: width() - 32,
-                                         height: (1.2 * width()) - 32)
+                            ClothesImage(url: product.picture.url)
+                            .frame(width: width() - 32, height: (1.2 * width()) - 32)
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
                             .scaleEffect(needImageInFullScreen ? zoom : 1)
                             .gesture(
                                 MagnifyGesture()

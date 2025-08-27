@@ -11,7 +11,10 @@ import SwiftUI
 struct TitleSection: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 22, weight: .semibold))
+            .font(.custom("SFProDisplay", size: 22))
+            .scaledToFill()
+            .font(.title)
+            .minimumScaleFactor(0.5)
     }
 }
 

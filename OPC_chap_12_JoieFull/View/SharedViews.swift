@@ -10,46 +10,25 @@ import SwiftUI
 
 struct ClothesImage: View {
     let url: String
-    let width: CGFloat
-    let height: CGFloat
-    var alreadyRetried: Bool = false
-        
+    
     var body: some View {
         AsyncImage(
             url: URL(string: url),
             transaction: Transaction(animation: .easeInOut)) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-                    .frame(width: width, height: height)
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .clipped()
-                    .frame(width: width, height: height)
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-            case .failure(let error):
-                if (error as? URLError)?.code == .cancelled {
-                    if alreadyRetried {
-                        Image("bag")
-                            .frame(width: width, height: height)
-                            .clipShape(RoundedRectangle(cornerRadius: 25))
-                    } else {
-                        ClothesImage(url: url, width: width, height: height, alreadyRetried: true)
-                    }
-                } else {
-                    Image(systemName: "exclamationmark.triangle")
-                        .frame(width: width, height: height)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .transition(.scale(scale: 0.1, anchor: .center))
+                case .failure(let error):
+                    Image(systemName: "wifi.slash")
+                default:
+                    Image("bag")
                 }
-            default:
-                Image("bag")
-                    .frame(width: width, height: height)
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
             }
-        }
     }
 }
 
@@ -69,7 +48,7 @@ struct DetailsProductDescription: View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
                 Text(productName)
-                    .font(.system(size: displayDescription ? 18 : 14, weight: .semibold))
+                    .font(.custom("SFProDisplay", size: displayDescription ? 18 : 14))
                     .foregroundStyle(.black)
                 Spacer()
                 HStack() {
@@ -78,7 +57,11 @@ struct DetailsProductDescription: View {
                     Text("\(product.evaluation, specifier: "%.1f")")
                         .foregroundStyle(.black)
                 }
-                .font(.system(size: 14, weight: .regular))
+//                .font(.system(size: 14, weight: .regular))
+                .font(.custom("SFProDisplay", size: 14))
+                .scaledToFit()
+                .font(.caption)
+                .minimumScaleFactor(0.2)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("Rating: \(Double.random(in: 1...5), specifier: "%.1f")")
@@ -92,12 +75,19 @@ struct DetailsProductDescription: View {
                     .strikethrough()
                     .accessibilityLabel("Ancien prix: \(product.originalPrice, specifier: "%.2f")€")
             }
-            .font(.system(size: displayDescription ? 18: 14, weight: .regular))
+            .font(.custom("SFProDisplay", size: displayDescription ? 18 : 14))
+            .scaledToFill()
+            .font(.headline)
+            .minimumScaleFactor(0.5)
+//            .font(.system(size: displayDescription ? 18: 14, weight: .regular))
             .padding(.top, displayDescription ? 1 : 0)
             if displayDescription {
                 Text(product.picture.description)
                     .foregroundStyle(.black)
-                    .font(.system(size: 14, weight: .regular))
+                    .font(.custom("SFProDisplay", size: 14))
+                    .scaledToFill()
+                    .font(.headline)
+                    .minimumScaleFactor(0.5)
                     .padding(.top, displayDescription ? 1 : 0)
             }
         }
@@ -108,6 +98,9 @@ struct DetailsProductDescription: View {
 struct Likes: View {
     @Environment(ClothesViewModel.self) private var clothes
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    
+    @ScaledMetric(relativeTo: .body) private var likeFrameWidth: CGFloat = 51
+    @ScaledMetric(relativeTo: .body) private var likeFrameHeight: CGFloat = 27
 
     let productId: Int
     
@@ -117,18 +110,19 @@ struct Likes: View {
     
     var body: some View {
         if let product {
-            Capsule()
-                .fill(.white)
-                .overlay(
-                    HStack(alignment: .center) {
-                        Image(systemName: product.isLiked ? "heart.fill" : "heart")
-                        Text(product.likes.description)
-                    }
-                        .font(.system(size: 14, weight: .semibold))
-                        .fixedSize(horizontal: true, vertical: true)
-                        .padding(.vertical, 4)
-                        .foregroundStyle(.black)
-                )
+            ZStack {
+                Capsule()
+                    .fill(.white)
+                    .frame(width: likeFrameWidth, height: likeFrameHeight)
+                    .font(.body)
+                HStack(alignment: .center) {
+                    Image(systemName: product.isLiked ? "heart.fill" : "heart")
+                    Text(product.likes.description)
+                }
+                .font(.custom("SFProDisplay", size: 14))
+                .padding(.vertical, 4)
+                .foregroundStyle(.black)
+            }
                 .onTapGesture {
                 clothes.toggleIsLiked(for: product)
                     if product.isLiked {

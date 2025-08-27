@@ -10,9 +10,17 @@ import SwiftUI
 struct CatalogView: View {
     @Environment(ClothesViewModel.self) private var clothes
     @State private var currentSelectedProduct: Product?
+    
+    @ScaledMetric(relativeTo: .body) private var imageFrameWidth: CGFloat = {
+        UIDevice.current.userInterfaceIdiom == .pad ? 221 : 198
+    }()
+    @ScaledMetric(relativeTo: .body) private var imageFrameHeight: CGFloat = {
+        UIDevice.current.userInterfaceIdiom == .pad ? 254 : 198
+    }()
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     private var detailViewWidth = UIScreen.main.bounds.width * 0.36
+    
     
     var body: some View {
         NavigationStack {
@@ -71,9 +79,11 @@ struct CatalogView: View {
                 ForEach(products) { product in
                     VStack(alignment: .leading) {
                         ZStack(alignment: .bottomTrailing) {
-                            ClothesImage(url: product.picture.url, width: 221, height: 254)
+                            ClothesImage(url: product.picture.url)
+                                .font(.body)
+                                .frame(width: imageFrameWidth, height: imageFrameHeight)
+                                .clipShape(RoundedRectangle(cornerRadius: 25))
                             Likes(productId: product.id)
-                                .frame(width: 51, height: 27)
                                 .padding(.bottom, 11.83)
                                 .padding(.trailing, 11.36)
                         }
@@ -86,7 +96,6 @@ struct CatalogView: View {
                             .accessibilityHidden(true)
                     }
                     .onTapGesture {
-                        print("On tape sur : \(product.name)")
                         currentSelectedProduct = product
                     }
                     .accessibilityElement(children: .combine)
@@ -104,9 +113,11 @@ struct CatalogView: View {
                         NavigationLink(value: product, label: {
                             VStack(alignment: .leading) {
                                 ZStack(alignment: .bottomTrailing) {
-                                    ClothesImage(url: product.picture.url, width: 198, height: 198)
+                                    ClothesImage(url: product.picture.url)
+                                        .font(.body)
+                                        .frame(width: imageFrameWidth, height: imageFrameHeight)
+                                        .clipShape(RoundedRectangle(cornerRadius: 25))
                                     Likes(productId: product.id)
-                                        .frame(width: 51, height: 27)
                                         .padding(.bottom, 11.83)
                                         .padding(.trailing, 11.36)
                                 }
