@@ -14,6 +14,9 @@ struct ProductDetailsView: View {
     @State var needImageInFullScreen: Bool = false
     @GestureState private var zoom = 1.0
     
+    @ScaledMetric private var bottomPadding: CGFloat = 14
+    @ScaledMetric private var trailingPadding: CGFloat = 17
+    
     var body: some View {
             ScrollView {
                 VStack(alignment: .leading) {
@@ -36,9 +39,8 @@ struct ProductDetailsView: View {
                             }
                             if needImageInFullScreen == false {
                                 Likes(productId: product.id)
-                                    .frame(width: 77, height: 33)
-                                    .padding(.bottom, 14)
-                                    .padding(.trailing, 17)
+                                    .padding(.bottom, bottomPadding)
+                                    .padding(.trailing, trailingPadding)
                                     .accessibilityHidden(true)
                             }
                         }

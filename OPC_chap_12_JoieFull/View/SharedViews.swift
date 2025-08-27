@@ -138,13 +138,17 @@ struct Likes: View {
 }
 
 struct Profile: View {
+    @ScaledMetric(relativeTo: .body) private var width: CGFloat = 43
+    @ScaledMetric(relativeTo: .body) private var height: CGFloat = 39
+    
     var body: some View {
         Image("Charlie")
             .resizable()
             .scaledToFill()
+            .font(.body)
             .clipShape(Circle())
             .background(.white)
-            .frame(width: 43, height: 39)
+            .frame(width: width, height: height)
     }
 }
 
