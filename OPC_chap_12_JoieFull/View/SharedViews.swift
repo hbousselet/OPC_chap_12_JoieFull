@@ -59,7 +59,6 @@ struct DetailsProductDescription: View {
                     Text("\(product.evaluation, specifier: "%.1f")")
                         .foregroundStyle(.black)
                 }
-//                .font(.system(size: 14, weight: .regular))
                 .font(.custom("SFProDisplay", size: 14))
                 .scaledToFit()
                 .font(.caption)
@@ -81,15 +80,12 @@ struct DetailsProductDescription: View {
             .scaledToFill()
             .font(.headline)
             .minimumScaleFactor(0.5)
-//            .font(.system(size: displayDescription ? 18: 14, weight: .regular))
             .padding(.top, displayDescription ? 1 : 0)
             if displayDescription {
                 Text(product.picture.description)
                     .foregroundStyle(.black)
                     .font(.custom("SFProDisplay", size: 14))
-                    .scaledToFill()
-                    .font(.headline)
-                    .minimumScaleFactor(0.5)
+                    .font(.caption)
                     .padding(.top, displayDescription ? 1 : 0)
             }
         }
@@ -156,18 +152,13 @@ struct Profile: View {
 
 struct Evaluation: View {
     @State var rating: Int = -1
-    @ScaledMetric(relativeTo: .body) private var width: CGFloat = 28
-    @ScaledMetric(relativeTo: .body) private var height: CGFloat = 24
     
     var body: some View {
         HStack(alignment: .center) {
             ForEach(0..<5, id: \.self) { index in
                 Image(systemName: index <= rating ? "star.fill" : "star")
                     .foregroundStyle(index <= rating ? .yellow : .gray)
-                    .frame(width: width, height: height)
-                    .font(.body)
-//                    .font(.system(size: 20))
-//                    .fixedSize(horizontal: true, vertical: true)
+                    .frame(width: 27, height: 23)
                     .onTapGesture {
                         rating = index
                     }

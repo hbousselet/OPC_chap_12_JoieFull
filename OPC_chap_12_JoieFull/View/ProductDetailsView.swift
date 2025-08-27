@@ -84,7 +84,6 @@ struct ProductDetailsView: View {
                                 .accessibilityLabel("Commenter le produit")
                         }
                     }
-
                 }
             }
     }
