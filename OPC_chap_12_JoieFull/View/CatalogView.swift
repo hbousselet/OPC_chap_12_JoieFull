@@ -136,7 +136,6 @@ struct CatalogView: View {
             }
         }
     }
-
 }
 
 private func showProgressView() -> some View {

@@ -1,0 +1,19 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "Capture d’écran 2025-09-03 à 10.16.43.png",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "ipad.pdf",
+      "idiom" : "ipad"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
