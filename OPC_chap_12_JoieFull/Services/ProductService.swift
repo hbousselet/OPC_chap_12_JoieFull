@@ -12,7 +12,11 @@ protocol ProductServiceLogic {
 }
 
 actor ProductService: ProductServiceLogic {
-    let apiService: ApiService = ApiService()
+    var apiService: ApiServiceInterface
+    
+    init(apiService: ApiServiceInterface) {
+        self.apiService = apiService
+    }
     
     func fetch() async throws -> [Product] {
         let products: [ProductResponseModel] = try await apiService.fetch().get()

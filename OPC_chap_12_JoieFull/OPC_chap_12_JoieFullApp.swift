@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct OPC_chap_12_JoieFullApp: App {
-    @State private var clothes = ClothesViewModel()
+    @State private var clothes = ClothesViewModel(serviceApi: ApiService())
     
     var body: some Scene {
         WindowGroup {

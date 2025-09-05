@@ -10,17 +10,22 @@ import Foundation
 @MainActor
 @Observable final class ClothesViewModel {
     private(set) var products: [Product] = []
-    private let productService: ProductService = ProductService()
+    private let productService: ProductService
+    var apiError: JoieFullError?
     
     var groupedProducts: [String: [Product]] {
         return Dictionary(grouping: products) { $0.category.rawValue }
+    }
+        
+    init(serviceApi: ApiServiceInterface) {
+        self.productService = ProductService(apiService: serviceApi)
     }
     
     func fetchProducts() async {
         do {
             products = try await productService.fetch()
         } catch {
-            print(error)
+            apiError = error as? JoieFullError
         }
     }
     

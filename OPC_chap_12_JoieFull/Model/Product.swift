@@ -8,7 +8,7 @@
 import Foundation
 import CoreTransferable
 
-struct Product: Hashable, Identifiable {
+struct Product: Hashable, Identifiable, Codable {
     let id: Int
     let picture: Picture
     let name: String
