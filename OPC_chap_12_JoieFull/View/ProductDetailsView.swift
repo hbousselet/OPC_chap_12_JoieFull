@@ -23,69 +23,54 @@ struct ProductDetailsView: View {
     @ScaledMetric private var shareViewHeight: CGFloat = 18
     
     var body: some View {
-            ScrollView {
-                GeometryReader { geometry in
-                    VStack(alignment: .leading) {
-                        ZStack(alignment: .topTrailing) {
-                            ZStack(alignment: .bottomTrailing) {
-                                ClothesImage(url: product.picture.url)
-                                    .frame(width: geometry.size.width - 32, height: (1.2 * geometry.size.width) - 32)
+        ScrollView {
+            GeometryReader { geometry in
+                VStack(alignment: .leading) {
+                    ZStack(alignment: .topTrailing) {
+                        ZStack(alignment: .bottomTrailing) {
+                            ClothesImage(url: product.picture.url)
+                                .frame(width: geometry.size.width - 32, height: (1.2 * geometry.size.width) - 32)
                                 .clipShape(RoundedRectangle(cornerRadius: 25))
-                                .scaleEffect(needImageInFullScreen ? zoom : 1)
-                                .gesture(
-                                    MagnifyGesture()
-                                        .updating($zoom) { value, gestureState, transaction in
-                                            gestureState = value.magnification
-                                        }
-                                )
-                                .onTapGesture {
-                                    withAnimation(.spring(duration: 0.5)) {
-                                        needImageInFullScreen.toggle()
-                                    }
-                                }
-                                if needImageInFullScreen == false {
-                                    Likes(productId: product.id)
-                                        .padding(.bottom, bottomPadding)
-                                        .padding(.trailing, trailingPadding)
-                                        .accessibilityHidden(true)
-                                }
-                            }
-                            if needImageInFullScreen == false {
-                                ShareLink(item: URL(string: product.picture.url)!,
-                                          subject: Text("Partager le produit avec vos amis"),
-                                          message: Text("Partager l'image du produit avec vos amis: ")) {
-                                    Image("Partager")
-                                        .accessibilityHidden(true)
-                                }
-                                          .frame(width: shareViewWidth, height: shareViewHeight)
-                                    .zIndex(1)
-                                    .foregroundStyle(.white)
-                                    .padding(.top, 20)
-                                    .padding(.trailing, 17)
-                            }
+                            Likes(productId: product.id)
+                                .padding(.bottom, bottomPadding)
+                                .padding(.trailing, trailingPadding)
+                                .accessibilityHidden(true)
+                            
                         }
-                        .padding(.horizontal, 16)
-                        if needImageInFullScreen == false {
-                            DetailsProductDescription(product: product, displayDescription: true)
-                                .padding(.top, 8)
-                                .accessibilityElement(children: .combine)
-                                .accessibilityLabel(product.accessibilityLabel)
-                            HStack(alignment: .center) {
-                                Profile()
-                                Evaluation()
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.top, 5)
-                            .accessibilityElement(children: .combine)
-                            .accessibilityLabel("Evaluer le produit")
-                            Commentary()
-                                .padding(.horizontal, 16)
-                                .padding(.top, 5)
-                                .accessibilityLabel("Commenter le produit")
+                        ShareLink(item: URL(string: product.picture.url)!,
+                                  subject: Text("Partager le produit avec vos amis"),
+                                  message: Text("Partager l'image du produit avec vos amis: ")) {
+                            Image("Partager")
+                                .accessibilityHidden(true)
                         }
+                                  .frame(width: shareViewWidth, height: shareViewHeight)
+                                  .zIndex(1)
+                                  .foregroundStyle(.white)
+                                  .padding(.top, 20)
+                                  .padding(.trailing, 17)
+                        
                     }
+                    .padding(.horizontal, 16)
+                    DetailsProductDescription(product: product, displayDescription: true)
+                        .padding(.top, 8)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel(product.accessibilityLabel)
+                    HStack(alignment: .center) {
+                        Profile()
+                        Evaluation()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 5)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Evaluer le produit")
+                    Commentary()
+                        .padding(.horizontal, 16)
+                        .padding(.top, 5)
+                        .accessibilityLabel("Commenter le produit")
+                    
                 }
             }
+        }
     }
 }
 
